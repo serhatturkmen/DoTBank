@@ -1,0 +1,57 @@
+{% extends "layout.html"%}
+{% block head %}
+<title>Hesaplar</title>
+{% endblock %}
+{% block body %}
+<div class="col-md-12">
+  Dekontlar
+</div>
+<div class="col-md-12">
+  <hr style="margin-top: 20px; margin-bottom: 20px;"/>
+</div>
+<div class="mst-form col-md-12">
+    <input class="form-control" id="filterinput" type="text" placeholder="Arama yap...">
+    {% if receipts == [] %}
+        <div class="alert alert-warning">Kayıt yok</div>
+    {% else %}
+    <div class="table-responsive table-hover">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Gönderici</th>
+                    <th>Alıcı</th>
+                    <th>Bakiye</th>
+                    <th>Detay</th>
+                    <th><center>Sil</center></th>
+                </tr>
+            </thead>
+            <tbody id="filtertable">
+            {% for receipt in receipts %}
+                <tr>
+                    <td>{{ user(receipt.senderid).name + " " + user(receipt.senderid).surname }}</td>
+                    <td>{{ user(receipt.receiverid).name + " " + user(receipt.receiverid).surname }}</td>
+                    <td>{{ amountformat(receipt.amount) }}</td>
+                    <td>{{ receipt.detail }}</td>
+                    <td>
+                        <center>
+                            <form action="{{url_for('.receipt')}}" method="POST">
+                                <input type="hidden" name="id" value="{{receipt.id}}"/>
+                                <button
+                                        type="submit"
+                                        name="event"
+                                        value="deletereceipt"
+                                        class="btn btn-danger btn-rounded"
+                                >
+                                    <i class="mdi mdi-delete"></i>
+                                </button>
+                            </form>
+                        </center>
+                    </td>
+                </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="tr"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/') }}bank.svg">
+</head>
+
+<body>
+  <div class="container">
+	<div class="row" style="padding-top: 100px;">
+        <div class="col-md-12">
+            <table class="table" style="padding: 0px">
+                <tbody>
+                    <tr>
+                        <td>
+                            <img src="{{url_for('static', filename='img/bank.svg')}}" style="float: left; padding-right: 10px; height: 48px; width: 48px" />
+                            <h1>DotBank</h1>
+                        </td>
+                        <td class="text-right"><h1>Online Bankacılık</h1></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+	</div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-12">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td class="font-weight-bold">Kart Numarası</td><td>{{ data.cardnumber }}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">İşlem Tarihi</td><td>{{ data.processdate }}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">İşlem Tutarı</td><td>{{ data.amount }}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold" colspan="2">İşlem Detayı</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">{{ data.processdetail}}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">*Bu dekont bilgilendirme amaçlı oluşturulmuştur. Bu dekont üzerinde bir değişiklik yapılması ve/veya bu dekont üzerindeki bilgilerin uyuşmaması halinde banka kayıtları esas alınacaktır.</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+  <!-- container-scroller -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

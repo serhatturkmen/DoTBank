@@ -1,0 +1,54 @@
+body{
+    background-color: #25274d;
+}
+.mylist {
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 10px;
+    list-style-type: none;
+    font-weight: 600;
+    text-align: center;
+}
+a{
+    color: #ffd162;
+}
+a:hover {
+    color: #25274d;
+    text-decoration: none;
+}
+
+.contact{
+    padding: 2%;
+    height: auto;
+}
+.col-md-3{
+    background: #ff9b00;
+    padding: 4%;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+.mst-info{
+    margin-top:10%;
+}
+
+.mst-info h2{
+    margin-bottom: 10%;
+}
+.col-md-9{
+    background: #fff;
+    padding: 3%;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+.mst-form label{
+    font-weight:600;
+}
+.add-button{
+    background: #25274d;
+    color: #fff;
+    font-weight: 600;
+    width: 25%;
+}
+.add-button:focus{
+    box-shadow:none;
+}
