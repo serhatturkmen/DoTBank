@@ -10,9 +10,13 @@ def createpdfdata(data):
 
 
 def savepdf(pdfdata, receiptid):
-    # save a file
-    if not os.path.exists(path="receipts"):
-        os.mkdir("receipts")
-    pdffile = open("receipts/receipt-"+str(receiptid)+" -"+getdate()+".pdf", 'wb')
-    pdffile.write(pdfdata)
-    pdffile.close()
+    try:
+        # save a file
+        if not os.path.exists(path="receipts"):
+            os.mkdir("receipts")
+        pdffile = open("receipts/receipt-"+str(receiptid) +
+                    "-"+getdate()+".pdf", 'wb')
+        pdffile.write(pdfdata)
+        pdffile.close()
+    except Exception as e:
+        pass
