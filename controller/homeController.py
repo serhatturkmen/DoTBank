@@ -111,13 +111,19 @@ def hello_pdf():
     pdffile.close()
 
     # save database
-    receiptEvents.add(senderid=1, receiverid=2, amount=1000, detail="sıcakyemek.tech adresinde 10 TL harcama yapıldı.")
+    receiptEvents.add(senderid=1, receiverid=2, amount=1000, detail="sıcakyemek.online adresinde 0,10 TL harcama yapıldı.")
 
     return render_pdf(url_for('.test'))
 
 
 @backend.route('/hello.pdf')
-def hellopdf(name):
+def hellopdf():
+    data = {
+        "cardnumber": "1111********4444",
+        "processdate": "29 Kasım 2020 01:45:20",
+        "processdetail": "detail",
+        "amount": "0,10"
+    }
+    html = render_template("receiptpdftemplate.html", data=data)
     # Make a PDF straight from HTML in a string.
-    html = render_template('hello.html', name=name)
     return render_pdf(HTML(string=html))
