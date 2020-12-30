@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{ user(receipt.senderid).name + " " + user(receipt.senderid).surname }}</td>
                     <td>{{ user(receipt.receiverid).name + " " + user(receipt.receiverid).surname }}</td>
-                    <td>{{ amountformat(receipt.amount) }}</td>
+                    <td>{{ receipt.amount }} TL</td>
                     <td>{{ receipt.detail }}</td>
                     <td>
                         <center>

@@ -14,7 +14,7 @@ def trust(cardnumber, year, month, secretkey, name):
     try:
         card = Card.query.filter_by(cardnumber=cardnumber).first()
         if card.name == name and card.year == int(year) and card.month == int(month) and card.secretkey == int(secretkey):
-            return card.id
+            return card.userid
         else:
             return False
     except Exception as e:

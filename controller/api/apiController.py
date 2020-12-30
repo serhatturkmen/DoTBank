@@ -25,19 +25,17 @@ def apitrust():
         })
 
 
-# curl -X POST -F 'receiverid=1' -F 'senderid=2' -F 'amount=10' -F 'detail=sıcakyemek projesi için 10 harcandı.' http://127.0.0.1:8580/api/v1.0/getpay/
+# curl -X POST -F 'receiverid=1' -F 'senderid=2' -F 'amount=10' http://127.0.0.1:8580/api/v1.0/getpay/
 @api.route("/api/v1.0/getpay/", methods=["POST"])
 def apigetpay():
     senderid = int(request.form.get("senderid", ""))
     receiverid = int(request.form.get("receiverid", ""))
     amount = int(request.form["amount"])
-    detail = request.form.get("detail", "")
     if amount <= userEvents.view(senderid).amount:
         result = userEvents.sendmoney(
             senderid=senderid,
             receiverid=receiverid,
-            amount=amount,
-            detail=detail
+            amount=amount
         )
         if result:
             return jsonify({"result": "Ödeme başarılı", "statu": True})

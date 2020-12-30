@@ -1,5 +1,5 @@
 from model import db, Receipt, cardEvents, userEvents, ReceiptPdf
-from FileEvents import createpdfdata, savepdf
+from FileEvents import createpdfdata, savepdf, sendmail
 from dateFunction import getdate
 
 
@@ -23,9 +23,18 @@ def add(senderid, receiverid, amount, detail):
         db.session.rollback()
 
         # Save to Pdf File on Database
-        adddbfile(senderid=senderid, detail=detail, amount=amount, receiptid=newreceipt.id)
+        pdfdata = adddbfile(senderid=senderid, detail=detail,
+                  amount=amount, receiptid=newreceipt.id)
 
-        # todo Send Mail // atachment to pdf
+        if pdfdata:
+            # todo Send Mail // atachment to pdf
+            senderdata = userEvents.view(id=senderid)
+            sendmail(
+                sendmailadress=senderdata.email,
+                subject="DoTBank İşlem Dekontu",
+                body=detail,
+                receiptdata=pdfdata
+            )
 
         return True
     except Exception as e:
@@ -41,24 +50,31 @@ def add(senderid, receiverid, amount, detail):
 
 
 def adddbfile(senderid, detail, amount, receiptid):
-    data = {
-        "cardnumber": hidecardnumber(carnumber=cardEvents.viewuser(userid=senderid).cardnumber),
-        "processdate": getdate(),
-        "processdetail": detail,
-        "amount": userEvents.amountformatter(amount)
-    }
-    pdfdata = createpdfdata(data=data)
+    try:
+        data = {
+            "cardnumber": hidecardnumber(carnumber=cardEvents.viewuser(userid=senderid).cardnumber),
+            "processdate": getdate(),
+            "processdetail": detail,
+            "amount": amount
+        }
+        pdfdata = createpdfdata(data=data)
 
-    newreceiptpdf = ReceiptPdf(
-        receiptid=receiptid,
-        pdf=pdfdata
-    )
-    db.session.add(newreceiptpdf)
-    db.session.commit()
-    db.session.rollback()
+        # save pdf on database
+        newreceiptpdf = ReceiptPdf(
+            receiptid=receiptid,
+            pdf=pdfdata
+        )
+        db.session.add(newreceiptpdf)
+        db.session.commit()
+        db.session.rollback()
 
-    savepdf(pdfdata=pdfdata, receiptid=receiptid)
-    return True
+        # add local file
+        savepdf(pdfdata=pdfdata, receiptid=receiptid)
+
+        return pdfdata
+    except Exception as e:
+        print(str(e))
+        return False
 
 
 def delete(id):
@@ -77,8 +93,3 @@ def delete(id):
 
 def hidecardnumber(carnumber):
     return carnumber[0] + carnumber[1] + carnumber[2] + carnumber[3] + "********" + carnumber[12] + carnumber[13] + carnumber[14] + carnumber[15]
-
-
-
-
-

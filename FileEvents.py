@@ -52,9 +52,9 @@ def sendmail(sendmailadress, subject, body, receiptdata, inhtml=True):
     if receiptdata:
         # attach file data
         payload = MIMEBase('application', 'octate-stream')
-        payload.set_payload(receiptdata.data)
+        payload.set_payload(receiptdata)
         encoders.encode_base64(payload)
-        payload.add_header('Content-Decomposition', 'attachment', filename=receiptdata.name)
+        payload.add_header('Content-Disposition', 'attachment; filename="receipt.pdf"')
         message.attach(payload)
 
     try:

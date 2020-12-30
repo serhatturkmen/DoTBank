@@ -102,14 +102,14 @@ def amountformatter(amount):
     return stramount[0:len(stramount)-2]+"," + stramount[len(stramount)-2] + "" + stramount[len(stramount)-1]
 
 
-def sendmoney(senderid, receiverid, amount, detail):
+def sendmoney(senderid, receiverid, amount):
     if withdraw(senderid, amount):
         if deposit(receiverid, amount):
             addreceipt = receiptEvents.add(
                 senderid=senderid,
                 receiverid=receiverid,
-                amount=amount,
-                detail=detail
+                amount=amountformatter(amount),
+                detail=createdetail(receiverid=receiverid, amount=amount)
             )
             if addreceipt:
                 return True
@@ -126,3 +126,6 @@ def sendmoney(senderid, receiverid, amount, detail):
 
 
 
+def createdetail(receiverid, amount):
+    receiverdata = view(id=receiverid)
+    return receiverdata.name + " " + receiverdata.surname + " kişisine hesabınızdan " + amountformatter(amount=amount) + " TL gönderilmiştir."

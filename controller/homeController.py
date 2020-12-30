@@ -27,7 +27,7 @@ def user():
         if request.form.get("event", "") == "submitdeposit":
             result = userEvents.deposit(
                 userid=request.form.get("userid", ""),
-                quantity=int(request.form['depositmoney'])
+                quantity=int(request.form.get('depositmoney', '').replace(",", "").replace(".", ""))
             )
             if result:
                 flash("Para başarıyla yatırılmıştır.", "success")
@@ -36,7 +36,7 @@ def user():
         if request.form.get("event", "") == "withdraw":
             result = userEvents.withdraw(
                 userid=request.form.get("userid", ""),
-                quantity=int(request.form['withdrawmoney'])
+                quantity=int(request.form.get('withdrawmoney', '').replace(",", "").replace(".", ""))
             )
             if result:
                 flash("Para başarıyla çekilmiştir.", "success")
@@ -128,26 +128,3 @@ def hellopdf():
     # Make a PDF straight from HTML in a string.
     return render_pdf(HTML(string=html))
 
-
-from flask import Flask
-from flask import render_template
-from flask import make_response
-import pdfkit
-
-@backend.route('/test')
-def test():
-    data = {
-        "cardnumber": "1111********4444",
-        "processdate": "29 Kasım 2020 01:45:20",
-        "processdetail": "detail",
-        "amount": "0,10"
-    }
-    html = render_template("receiptpdftemplate.html", data=data)
-    # Make a PDF straight from HTML in a string.
-    # pdfkit.from_file(render_template("receiptpdftemplate.html", data=data), 'out.pdf')
-    pdf = pdfkit.from_string(html, False)
-    print(pdf)
-    response = make_response(pdf)
-    response.headers["Content-Type"] = "application/pdf"
-    response.headers["Content-Disposition"] = "inline; filename=output.pdf"
-    return response

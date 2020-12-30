@@ -71,9 +71,9 @@
                         <form class="form" action="{{url_for('.user')}}" method="POST">
                           <div class="modal-body">
                               <div class="form-group">
-                                <label class="control-label" for="depositmoney">Para Miktarı ( Para miktarina virgülsüz olarak kuruşu dahil ediniz. )</label>
+                                <label class="control-label" for="depositmoney">Para Miktarı (Örn: 1,50)</label>
                                 <input type="hidden" name="userid" value="{{user.id}}"/>
-                                <input type="number" class="form-control" id="depositmoney" placeholder="Miktar..." name="depositmoney" required />
+                                <input type="number" class="form-control" min="0.01" max="10000.00" step="0.01" id="depositmoney" name="depositmoney" value="1.00" required />
                               </div>
                           </div>
                           <div class="modal-footer">
@@ -95,9 +95,9 @@
                   <form class="form" action="{{url_for('.user')}}" method="POST">
                       <div class="modal-body">
                           <div class="form-group">
-                            <label class="control-label" for="withdrawmoney">Para Miktarı ( Para miktarina virgülsüz olarak kuruşu dahil ediniz. )</label>
+                            <label class="control-label" for="withdrawmoney">Para Miktarı (Örn: 1,50)</label>
                             <input type="hidden" name="userid" value="{{user.id}}"/>
-                            <input type="number" class="form-control" id="withdrawmoney" placeholder="Miktar..." name="withdrawmoney" required />
+                            <input type="number" class="form-control" min="0.01" max="10000.00" step="0.01" id="withdrawmoney" name="withdrawmoney" value="1.00" required />
                           </div>
                       </div>
                       <div class="modal-footer">
