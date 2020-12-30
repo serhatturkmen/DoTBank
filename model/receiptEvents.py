@@ -25,7 +25,6 @@ def add(senderid, receiverid, amount, detail):
         # Save to Pdf File on Database
         pdfdata = adddbfile(senderid=senderid, detail=detail,
                   amount=amount, receiptid=newreceipt.id)
-        '''
         if pdfdata:
             # todo Send Mail // atachment to pdf
             senderdata = userEvents.view(id=senderid)
@@ -35,7 +34,6 @@ def add(senderid, receiverid, amount, detail):
                 body=detail,
                 receiptdata=pdfdata
             )
-        '''
         return True
     except Exception as e:
         print("Dekont eklenemedi.")
