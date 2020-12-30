@@ -2,6 +2,7 @@ from flask import render_template
 from dateFunction import getdate
 from flask_weasyprint import render_pdf, HTML
 import os
+from bank import app
 
 # mail için
 import smtplib
@@ -23,8 +24,8 @@ def savepdf(pdfdata, receiptid):
         # save a file
         if not os.path.exists(path="receipts"):
             os.mkdir("receipts")
-        pdffile = open("receipts/receipt-"+str(receiptid) +
-                    "-"+getdate()+".pdf", 'wb')
+        filepath =os.path.join(app.root_path, 'receipts', "receipt-" + str(receiptid) + ".pdf")
+        pdffile = open(filepath, 'wb')
         pdffile.write(pdfdata)
         pdffile.close()
     except Exception as e:
