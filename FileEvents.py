@@ -9,6 +9,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import sys
 
+from email.mime.base import MIMEBase
+from email import encoders
+
 
 def createpdfdata(data):
     html = render_template("receiptpdftemplate.html", data=data)
@@ -28,10 +31,10 @@ def savepdf(pdfdata, receiptid):
         print(str(e))
 
 
-def sendmail(sendmailadress, subject, body, inhtml=True):
-    mailadress = "mailinformation.smtpEmail"
-    mailpass = "mailinformation.smtpPassword"
-    mailserver = "mailinformation.smtpServer"
+def sendmail(sendmailadress, subject, body, receiptdata, inhtml=True):
+    mailadress = "trakya@serhatturkmen.tech"
+    mailpass = "NcsuAz%9"
+    mailserver = "us2.smtp.mailhostbox.com"
     mailport = 587
     if mailadress == sendmailadress:
         return 2
@@ -45,7 +48,15 @@ def sendmail(sendmailadress, subject, body, inhtml=True):
     else:
         body_text = MIMEText(body, "plain")
     message.attach(body_text)
-    message.attach
+
+    if receiptdata:
+        # attach file data
+        payload = MIMEBase('application', 'octate-stream')
+        payload.set_payload(receiptdata.data)
+        encoders.encode_base64(payload)
+        payload.add_header('Content-Decomposition', 'attachment', filename=receiptdata.name)
+        message.attach(payload)
+
     try:
         mail = smtplib.SMTP(host=mailserver, port=mailport)
         mail.ehlo()
