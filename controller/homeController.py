@@ -28,6 +28,17 @@ def user():
                     flash("Kullanıcı başarıyla eklenmiştir.", "success")
                 else:
                     flash("Kullanıcı eklenirken hata alındı.", "warning")
+            if request.form.get("event", "") == "updateuser":
+                result = userEvents.update(
+                    id=request.form.get("id", ""),
+                    name=request.form.get("name", ""),
+                    surname=request.form.get("surname", ""),
+                    email=request.form.get("email", "")
+                )
+                if result:
+                    flash("Kullanıcı başarıyla güncellenmiştir.", "success")
+                else:
+                    flash("Kullanıcı güncellenirken hata alındı.", "warning")
             if request.form.get("event", "") == "submitdeposit":
                 result = userEvents.deposit(
                     userid=request.form.get("userid", ""),
@@ -47,8 +58,8 @@ def user():
                 else:
                     flash("Para çekme işlemi başarısız sonuçlandı.", "warning")
             if request.form.get("event", "") == "deleteuser":
-                if userEvents.getamount(request.form.get("accountid", "")) == 0:
-                    result = userEvents.delete(userid=request.form.get("accountid", ""))
+                if userEvents.getamount(request.form.get("id", "")) == 0:
+                    result = userEvents.delete(userid=request.form.get("id", ""))
                     if result:
                         flash("Kullanıcı başarıyla silinmiştir.", "success")
                 else:

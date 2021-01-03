@@ -24,6 +24,7 @@
                     <th>Ad Soyad</th>
                     <th>Email</th>
                     <th>Bakiye</th>
+                    <th>Düzenle</th>
                     <th>Yatır</th>
                     <th>Çek</th>
                     <th><center>Sil</center></th>
@@ -35,6 +36,13 @@
                     <td>{{ user.name + " " + user.surname }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ amountformat(user.amount) }}</td>
+                    <td>
+                        <center>
+                            <button type="button" class="btn btn-primary btn-rounded btn-icon float-right" data-toggle="modal" data-target="#update{{user.id}}">
+                                <i class="mdi mdi-rename-box"></i>
+                            </button>
+                        </center>
+                    </td>
                     <td>
                         <center>
                             <button type="button" class="btn btn-primary btn-rounded btn-icon float-right" data-toggle="modal" data-target="#deposit{{user.id}}">
@@ -57,12 +65,11 @@
                                     <i class="mdi mdi-delete"></i>
                                 </button>
                             </form>
-
                         </center>
                     </td>
                 </tr>
             <!-- modal başla-->
-            <div class="modal fade" id="deposit{{user.id}}">
+            <div class="modal fade" id="update{{user.id}}">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -70,21 +77,59 @@
                         </div>
                         <form class="form" action="{{url_for('.user')}}" method="POST">
                           <div class="modal-body">
-                              <div class="form-group">
-                                <label class="control-label" for="depositmoney">Para Miktarı (Örn: 1,50)</label>
-                                <input type="hidden" name="userid" value="{{user.id}}"/>
-                                <input type="number" class="form-control" min="0.01" max="10000.00" step="0.01" id="depositmoney" name="depositmoney" value="1.00" required />
+                            <div class="form-group">
+                              <label class="control-label" for="name">Adı</label>
+                              <div>
+                                <input type="hidden" value="{{ user.id }}" name="id" required />
+                                <input type="text" class="form-control" id="name" value="{{ user.name }}" name="name" required />
                               </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="submit" class="btn btn-default add-button" name="event" value="submitdeposit">Yatır</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
-                          </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label" for="surname">Soyadı</label>
+                              <div>
+                                <input type="text" class="form-control" id="surname" value="{{ user.surname }}" name="surname" required />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="control-label" for="email">Email</label>
+                              <div>
+                                <input type="text" class="form-control" id="email" value="{{ user.email }}" name="email" required />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <button type="submit" class="btn btn-default add-button" name="event" value="updateuser">Güncelle</button>
+                              <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Kapat</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
+          </div>
             <!-- modal bitiş-->
+            <!-- modal başla-->
+            <div class="modal fade" id="deposit{{user.id}}">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title">Para Yatır</h4>
+                      </div>
+                      <form class="form" action="{{url_for('.user')}}" method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                              <label class="control-label" for="depositmoney">Para Miktarı (Örn: 1,50)</label>
+                              <input type="hidden" name="userid" value="{{user.id}}"/>
+                              <input type="number" class="form-control" min="0.01" max="10000.00" step="0.01" id="depositmoney" name="depositmoney" value="1.00" required />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default add-button" name="event" value="submitdeposit">Yatır</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
+                        </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+          <!-- modal bitiş-->
             <!-- modal başla-->
             <div class="modal fade" id="withdraw{{user.id}}">
               <div class="modal-dialog">

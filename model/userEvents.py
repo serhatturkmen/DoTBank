@@ -5,10 +5,10 @@ from flask import session
 def viewall(): return User.query.all()
 
 
-def view(id): return User.query.get(id)
+def view(id): return User.query.filter_by(id=id).first()
 
 
-def getamount(userid): return User.query.get(userid).amount
+def getamount(userid): return User.query.filter_by(id=userid).first().amount
 
 
 def add(name, surname, email, amount=0):
@@ -33,8 +33,8 @@ def add(name, surname, email, amount=0):
 def update(id, name, surname, email):
     try:
         updateuser = view(id=id)
-        updateuser.name = name,
-        updateuser.surname = surname,
+        updateuser.name = name
+        updateuser.surname = surname
         updateuser.email = email
         db.session.commit()
         db.session.rollback()

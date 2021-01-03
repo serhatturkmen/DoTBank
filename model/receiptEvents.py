@@ -9,7 +9,7 @@ def viewall(): return Receipt.query.all()
 def view(id): return Receipt.query.get(id)
 
 
-# receiptEvents.add(senderid=1, receiverid=2, amount=1000, detail="sıcakyemek.tech adresinde 10 TL harcama yapıldı.")
+# receiptEvents.add(senderid=1, receiverid=2, amount=1000, detail="sıcakyemek kişisine 10 TL harcama yapıldı.")
 def add(senderid, receiverid, amount, detail):
     try:
         newreceipt = Receipt(

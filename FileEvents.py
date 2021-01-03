@@ -33,9 +33,9 @@ def savepdf(pdfdata, receiptid):
 
 
 def sendmail(sendmailadress, subject, body, receiptdata, inhtml=True):
-    mailadress = "trakya@serhatturkmen.tech"
+    mailadress = "info@sicakyemek.online"
     mailpass = "NcsuAz%9"
-    mailserver = "us2.smtp.mailhostbox.com"
+    mailserver = "ni-maia-da.guzelhosting.com"
     mailport = 587
     if mailadress == sendmailadress:
         return 2
