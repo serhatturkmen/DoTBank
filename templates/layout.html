@@ -25,13 +25,15 @@
 				<img class="img-fluid mx-auto d-block rounded" src="{{ url_for('static', filename='img/') }}bank.svg" alt="image">
 				<h3 class="text-center">DoT Bank</h3>
                 <hr>
+                {% if session.get("login", "") %}
                 <ul class="mylist">
                   <li><a href="{{url_for('.home')}}">Anasayfa</a></li>
                   <li><a href="{{url_for('.user')}}">Hesaplar</a></li>
                   <li><a href="{{url_for('.card')}}">Kartlar</a></li>
                   <li><a href="{{url_for('.receipt')}}">Dekontlar</a></li>
-                  <li><a href="{{ url_for('.home') }}">Çıkış</a></li>
+                  <li><a href="{{ url_for('.logout') }}">Çıkış</a></li>
                 </ul>
+                {% endif %}
 			</div>
 		</div>
 		<div class="col-md-9">

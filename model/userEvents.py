@@ -1,4 +1,5 @@
 from model import db, User, receiptEvents
+from flask import session
 
 
 def viewall(): return User.query.all()
@@ -129,3 +130,18 @@ def sendmoney(senderid, receiverid, amount):
 def createdetail(receiverid, amount):
     receiverdata = view(id=receiverid)
     return receiverdata.name + " " + receiverdata.surname + " kişisine hesabınızdan " + amountformatter(amount=amount) + " TL gönderilmiştir."
+
+
+def login(username, password):
+    if username == "DoT" and password == "123456":
+        session['login'] = True
+        return True
+    else:
+        session['login'] = False
+        return False
+
+
+def logout():
+    session['login'] = False
+    return False
+
