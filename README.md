@@ -17,3 +17,5 @@ Kart Bilgisinden kullanıcı numarası öğrenme
 
 Gelen kullanıcı numarasından ödeme almak
   - curl -X POST -F 'receiverid=1' -F 'senderid=2' -F 'amount=10' http://127.0.0.1:8580/api/v1.0/getpay/
+
+![alt text](https://github.com/serhatturkmen/DoTBank/blob/main/images/hesaplar.png)
