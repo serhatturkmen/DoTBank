@@ -4,39 +4,39 @@ from datetime import datetime
 def getdate():
     datenow = datetime.now().strftime('%d,%m,%Y,%H,%M,%S')
     partofdate = datenow.split(',')
-    yil = partofdate[2]
-    ay = turkishmonth(int(partofdate[1]))
-    gun = partofdate[0]
-    saat = partofdate[3]
-    dakika = partofdate[4]
-    saniye = partofdate[5]
-    return gun + ' ' + ay + ' ' + yil + ' ' + saat + ':' + dakika + ':' + saniye
+    year = partofdate[2]
+    month = turkishmonth(int(partofdate[1]))
+    day = partofdate[0]
+    hour = partofdate[3]
+    mmunite = partofdate[4]
+    second = partofdate[5]
+    return day + ' ' + month + ' ' + year + ' ' + hour + ':' + mmunite + ':' + second
 
 
-def turkishmonth(ay):
-    if ay == 1:
+def turkishmonth(month):
+    if month == 1:
         return 'Ocak'
-    elif ay == 2:
+    elif month == 2:
         return 'Şubat'
-    elif ay == 3:
+    elif month == 3:
         return 'Mart'
-    elif ay == 4:
+    elif month == 4:
         return 'Nisan'
-    elif ay == 5:
+    elif month == 5:
         return 'Mayıs'
-    elif ay == 6:
+    elif month == 6:
         return 'Haziran'
-    elif ay == 7:
+    elif month == 7:
         return 'Temmuz'
-    elif ay == 8:
+    elif month == 8:
         return 'Ağustos'
-    elif ay == 9:
+    elif month == 9:
         return 'Eylül'
-    elif ay == 10:
+    elif month == 10:
         return 'Ekim'
-    elif ay == 11:
+    elif month == 11:
         return 'Kasım'
-    elif ay == 12:
+    elif month == 12:
         return 'Aralık'
     else:
         return False

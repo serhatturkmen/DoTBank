@@ -51,7 +51,6 @@ def sendmail(sendmailadress, subject, body, receiptdata, inhtml=True):
     message.attach(body_text)
 
     if receiptdata:
-        # attach file data
         payload = MIMEBase('application', 'octate-stream')
         payload.set_payload(receiptdata)
         encoders.encode_base64(payload)
@@ -67,7 +66,7 @@ def sendmail(sendmailadress, subject, body, receiptdata, inhtml=True):
         result = 1
         mail.close()
     except Exception as e:
-        print("Mail ... Bir hata oluştu. Tekrar deneyin...")
+        print("Mail gönderiminde bir hata alındı. Hata metni:")
         print(str(e))
         result = 3
     return result
