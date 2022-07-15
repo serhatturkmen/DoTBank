@@ -1,0 +1,4 @@
+flask
+flask-sqlalchemy
+flask_weasyprint>=0.5
+weasyprint==50.0

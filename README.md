@@ -2,12 +2,16 @@
 Flask Bank Project
 
 # Kurulum
+
+- Gerekli olan kurulumlar (Linux için)
+sudo apt-get install libgtk-3-dev
+
 - E-posta hizmetini kullanabilmek için FileEvent.py dosyasındaki sendmail fonksiyonunda
     - mailadress
     - mailpass
     - mailserver
     - mailport
-    
+
 Değişkenlerine mevcut eposta hizmetinizi girmelisiniz.
 
 # Api Kullanımı

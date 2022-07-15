@@ -1,5 +1,5 @@
 from controller import controllerBlueprint as backend
-from flask import render_template, request, flash, redirect, url_for, session
+from flask import render_template, request, flash, redirect, url_for, session, make_response
 from model import userEvents, cardEvents, receiptEvents
 from flask_weasyprint import render_pdf, HTML
 
@@ -101,6 +101,9 @@ def card():
 def receipt():
     if session.get("login", ""):
         if request.method == "POST":
+            if request.form.get("event", "") == "downloadreceipt":
+                return redirect(url_for(".login"))
+                result = receiptEvents.view(id=request.form.get("id", "")).pdf
             if request.form.get("event", "") == "deletereceipt":
                 result = receiptEvents.delete(id=request.form.get("id", ""))
                 if result:
@@ -132,42 +135,13 @@ def login():
         return render_template("login.html")
 
 
-# test
-@backend.route("/receipt/show/<int:id>/")
-def showreceiptpdf(id):
-    return render_pdf(url_for('.receipthtml', id=id))
-
-
-@backend.route("/receipt/download/<int:id>/")
-def downloadreceiptpdf(id):
-    return render_pdf(url_for('.receipthtml', id=id))
-
-
-@backend.route('/hello')
-def hello_pdf():
-    # Make a PDF from another view
-    pdfdata = render_pdf(url_for(".receipthtml")).data
-
-    # save file data
-    pdffile = open("receipt.pdf", 'wb')
-    pdffile.write(pdfdata)
-    pdffile.close()
-
-    # save database
-    receiptEvents.add(senderid=1, receiverid=2, amount=1000, detail="sıcakyemek.online adresinde 0,10 TL harcama yapıldı.")
-
-    return render_pdf(url_for('.test'))
-
-
-@backend.route('/hello.pdf')
-def hellopdf():
-    data = {
-        "cardnumber": "1111********4444",
-        "processdate": "29 Kasım 2020 01:45:20",
-        "processdetail": "detail",
-        "amount": "0,10"
-    }
-    html = render_template("receiptpdftemplate.html", data=data)
-    # Make a PDF straight from HTML in a string.
-    return render_pdf(HTML(string=html))
-
+@backend.route("/receipt/pdf/<int:id>/")
+def receipthtml(id):
+    receipt_pdf = receiptEvents.get_receipt_pdf(receipt_id=id)
+    if receipt_pdf:
+        response = make_response(receipt_pdf)
+        response.headers["Content-Type"] = "application/pdf"
+        response.headers["Content-Disposition"] = "inline; filename=receipt.pdf"
+        return response
+    else:
+        return "Not found receipt data."

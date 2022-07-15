@@ -89,3 +89,15 @@ def delete(id):
 
 def hidecardnumber(carnumber):
     return carnumber[0] + carnumber[1] + carnumber[2] + carnumber[3] + "********" + carnumber[12] + carnumber[13] + carnumber[14] + carnumber[15]
+
+
+def get_receipt_pdf(receipt_id):
+    receipt = view(receipt_id)
+    data = {
+        "cardnumber": hidecardnumber(carnumber=cardEvents.viewuser(userid=receipt.senderid).cardnumber),
+        "processdate": receipt.processdate,
+        "processdetail": receipt.detail,
+        "amount": receipt.amount
+    }
+    data = createpdfdata(data)
+    return data
