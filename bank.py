@@ -1,13 +1,15 @@
 from flask import Flask
 from model import db
 from controller import controllerBlueprint
+from dotenv import load_dotenv
+import os
 
-
+load_dotenv()
 app = Flask(__name__)
 
+print(os.getenv("EMAIL_PASSWORD"))
 
-app.config['SECRET_KEY'] = 'hjo2tasdfa_DoT07pyws_!88#'
-
+app.config['SECRET_KEY'] = os.getenv("MY_SECRET")
 app.register_blueprint(controllerBlueprint)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///veritabani.db'

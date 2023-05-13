@@ -33,9 +33,9 @@ def savepdf(pdfdata, receiptid):
 
 
 def sendmail(sendmailadress, subject, body, receiptdata, inhtml=True):
-    mailadress = ""
-    mailpass = ""
-    mailserver = ""
+    mailadress = os.getenv("EMAIL_USERNAME")
+    mailpass = os.getenv("EMAIL_PASSWORD")
+    mailserver = os.getenv("EMAIL_SERVER")
     mailport = 587
     if mailadress == sendmailadress:
         return 2
