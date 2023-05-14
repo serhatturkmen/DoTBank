@@ -53,7 +53,7 @@ def adddbfile(senderid, detail, amount, receiptid):
             "processdetail": detail,
             "amount": amount
         }
-        pdfdata = createpdfdata(data=data)
+        pdfdata = createpdfdata(data)
 
         # save pdf on database
         newreceiptpdf = ReceiptPdf(
