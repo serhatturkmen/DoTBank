@@ -4,4 +4,5 @@ conroller/__pycache__
 model/__pycache__
 .vscode
 
+receipts/.DS_Store
 .env
