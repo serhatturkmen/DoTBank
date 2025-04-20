@@ -1,5 +1,5 @@
-flask
-flask-sqlalchemy
+Flask>=1.1.2
+Flask-SQLAlchemy>=2.5.1
 flask_weasyprint>=0.5
 weasyprint==50.0
 python-dotenv

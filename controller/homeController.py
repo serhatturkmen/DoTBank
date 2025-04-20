@@ -1,18 +1,18 @@
-from controller import controllerBlueprint as backend
-from flask import render_template, request, flash, redirect, url_for, session, make_response
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session, make_response
 from model import userEvents, cardEvents, receiptEvents
-from flask_weasyprint import render_pdf, HTML
 
 
-@backend.route("/", methods=["GET", "POST"])
-def home():
+home = Blueprint('home', __name__)
+
+@home.route("/", methods=["GET", "POST"])
+def home_page():
     if session.get("login", ""):
         return render_template("index.html")
     else:
         return redirect(url_for(".login"))
 
 
-@backend.route("/user/", methods=["GET", "POST"])
+@home.route("/user/", methods=["GET", "POST"])
 def user():
     if session.get("login", ""):
         #todo hesap silinirken kartı olup olmadığına bak
@@ -71,7 +71,7 @@ def user():
         return redirect(url_for(".login"))
 
 
-@backend.route("/card/", methods=["GET", "POST"])
+@home.route("/card/", methods=["GET", "POST"])
 def card():
     if session.get("login", ""):
         if request.method == "POST":
@@ -97,7 +97,7 @@ def card():
         return redirect(url_for(".login"))
 
 
-@backend.route("/receipt/", methods=["GET", "POST"])
+@home.route("/receipt/", methods=["GET", "POST"])
 def receipt():
     if session.get("login", ""):
         if request.method == "POST":
@@ -115,15 +115,15 @@ def receipt():
         return redirect(url_for(".login"))
 
 
-@backend.route('/logout/', methods=["GET", "POST"])
+@home.route('/logout/', methods=["GET", "POST"])
 def logout():
     session['login'] = False
     return redirect(url_for(".login"))
     
-@backend.route('/login/', methods=["GET", "POST"])
+@home.route('/login/', methods=["GET", "POST"])
 def login():
     if session.get('login', ''):
-        return redirect(url_for('.home'))
+        return redirect(url_for('.home_page'))
     else:
         if request.method == "POST":
             result = userEvents.login(
@@ -131,11 +131,11 @@ def login():
                 password=request.form.get("pass", "")
             )
             if result:
-                return redirect(url_for(".home"))
+                return redirect(url_for(".home_page"))
         return render_template("login.html")
 
 
-@backend.route("/receipt/pdf/<int:id>/")
+@home.route("/receipt/pdf/<int:id>/")
 def receipthtml(id):
     receipt_pdf = receiptEvents.get_receipt_pdf(receipt_id=id)
     if receipt_pdf:
@@ -143,5 +143,20 @@ def receipthtml(id):
         response.headers["Content-Type"] = "application/pdf"
         response.headers["Content-Disposition"] = "inline; filename=receipt.pdf"
         return response
+    else:
+        return "Not found receipt data."
+
+
+@home.route("/receipt/html/<int:id>/")
+def receipthtml2(id):
+    receipt = receiptEvents.view(id)
+    data = {
+        "cardnumber": receiptEvents.hidecardnumber(carnumber=cardEvents.viewuser(userid=receipt.senderid).cardnumber),
+        "processdate": receipt.processdate,
+        "processdetail": receipt.detail,
+        "amount": receipt.amount
+    }
+    if data:
+        return render_template("receiptpdftemplate.html", data=data)
     else:
         return "Not found receipt data."

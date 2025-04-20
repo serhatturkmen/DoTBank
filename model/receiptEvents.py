@@ -23,7 +23,7 @@ def add(senderid, receiverid, amount, detail):
 
         # Save to Pdf File on Database
         pdfdata = adddbfile(senderid=senderid, detail=detail,
-                  amount=amount, receiptid=newreceipt.id)
+                            amount=amount, receiptid=newreceipt.id)
         if pdfdata:
             senderdata = userEvents.view(id=senderid)
             sendmail(
@@ -36,10 +36,10 @@ def add(senderid, receiverid, amount, detail):
     except Exception as e:
         print("Dekont eklenemedi.")
         print("Dekont Bilgileri.")
-        print("Senderid = "+str(senderid))
-        print("Receiverid = "+str(receiverid))
-        print("Amount = "+str(amount))
-        print("Detail = "+detail)
+        print("Senderid = " + str(senderid))
+        print("Receiverid = " + str(receiverid))
+        print("Amount = " + str(amount))
+        print("Detail = " + detail)
         print("Hata:::")
         print(str(e))
         return False
@@ -48,10 +48,10 @@ def add(senderid, receiverid, amount, detail):
 def adddbfile(senderid, detail, amount, receiptid):
     try:
         data = {
-            "cardnumber": hidecardnumber(carnumber=cardEvents.viewuser(userid=senderid).cardnumber),
-            "processdate": getdate(),
-            "processdetail": detail,
-            "amount": amount
+            "cardnumber": str(hidecardnumber(carnumber=cardEvents.viewuser(userid=senderid).cardnumber)),
+            "processdate": str(getdate()),
+            "processdetail": str(detail),
+            "amount": str(amount)
         }
         pdfdata = createpdfdata(data)
 
@@ -88,7 +88,8 @@ def delete(id):
 
 
 def hidecardnumber(carnumber):
-    return carnumber[0] + carnumber[1] + carnumber[2] + carnumber[3] + "********" + carnumber[12] + carnumber[13] + carnumber[14] + carnumber[15]
+    return carnumber[0] + carnumber[1] + carnumber[2] + carnumber[3] + "********" + carnumber[12] + carnumber[13] + \
+        carnumber[14] + carnumber[15]
 
 
 def get_receipt_pdf(receipt_id):

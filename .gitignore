@@ -1,8 +1,11 @@
 
 __pycache__
-conroller/__pycache__
-model/__pycache__
+*/**/__pycache__
+
 .vscode
 
 receipts/.DS_Store
 .env
+
+venv
+.idea

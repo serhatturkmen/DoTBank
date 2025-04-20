@@ -1,7 +1,7 @@
-from controller import controllerBlueprint as api
-from flask import request, jsonify
+from flask import Blueprint, request, jsonify
 from model import cardEvents, userEvents
 
+api = Blueprint('api', __name__)
 
 # curl -X POST -F 'cardnumber=1111222233334444' -F 'year=2023' -F 'month=10' -F 'name=JOHN DOE' -F 'secretkey=145' http://127.0.0.1:8580/api/v1.0/trust/
 @api.route("/api/v1.0/trust/", methods=["POST"])

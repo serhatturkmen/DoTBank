@@ -2,7 +2,7 @@ from flask import render_template
 from dateFunction import getdate
 from flask_weasyprint import render_pdf, HTML
 import os
-from bank import app
+from flask import current_app as app
 
 # mail için
 import smtplib
@@ -16,7 +16,7 @@ from email import encoders
 
 def createpdfdata(data):
     html = render_template("receiptpdftemplate.html", data=data)
-    return render_pdf(HTML(string=html)).data
+    return HTML(string=html).write_pdf()
 
 
 def savepdf(pdfdata, receiptid):
